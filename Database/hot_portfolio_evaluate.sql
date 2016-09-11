@@ -26,9 +26,10 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `t_stock_base_earnings`;
 CREATE TABLE `t_stock_base_earnings` (
   `stock_code` varchar(20) NOT NULL,
-  `trade_day` int(10) DEFAULT NULL COMMENT '记录规则如：20160911',
+  `trade_day` int(10) NOT NULL COMMENT '记录规则如：20160911',
   `stock_earnings` double DEFAULT NULL,
-  `earnings_type` char(2) DEFAULT NULL COMMENT '0：个股收益率；1：行业收益率；2：沪深300收益率；'
+  `earnings_type` char(2) DEFAULT NULL COMMENT '0：个股收益率；1：行业收益率；2：沪深300收益率；',
+  KEY `stock_day` (`stock_code`,`trade_day`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
