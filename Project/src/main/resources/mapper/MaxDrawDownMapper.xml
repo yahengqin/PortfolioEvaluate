@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.MaxDrawDownMapper">
+	<resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.MaxDrawDown">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="max_draw_down_20" jdbcType="DOUBLE" property="maxDrawDown20" />
+		<result column="max_draw_down_120" jdbcType="DOUBLE" property="maxDrawDown120" />
+		<result column="max_draw_down_250" jdbcType="DOUBLE" property="maxDrawDown250" />
+		<result column="max_draw_down_500" jdbcType="DOUBLE" property="maxDrawDown500" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_stock_max_draw_down
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.MaxDrawDown">
+		insert into t_stock_max_draw_down (stock_code, max_draw_down_20,
+		max_draw_down_120,
+		max_draw_down_250, max_draw_down_500)
+		values (#{stockCode,jdbcType=VARCHAR}, #{maxDrawDown20,jdbcType=DOUBLE},
+		#{maxDrawDown120,jdbcType=DOUBLE},
+		#{maxDrawDown250,jdbcType=DOUBLE}, #{maxDrawDown500,jdbcType=DOUBLE})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.MaxDrawDown">
+		update t_stock_max_draw_down
+		set max_draw_down_20 = #{maxDrawDown20,jdbcType=DOUBLE},
+		max_draw_down_120 = #{maxDrawDown120,jdbcType=DOUBLE},
+		max_draw_down_250 = #{maxDrawDown250,jdbcType=DOUBLE},
+		max_draw_down_500 = #{maxDrawDown500,jdbcType=DOUBLE}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, max_draw_down_20, max_draw_down_120,
+		max_draw_down_250,
+		max_draw_down_500
+		from t_stock_max_draw_down
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, max_draw_down_20, max_draw_down_120, max_draw_down_250,
+		max_draw_down_500
+		from t_stock_max_draw_down
+	</select>
+</mapper>

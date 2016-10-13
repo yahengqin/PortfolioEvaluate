@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.SharpRatioMapper">
+	<resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.SharpRatio">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="sharp_ratio_20" jdbcType="DOUBLE" property="sharpRatio20" />
+		<result column="sharp_ratio_120" jdbcType="DOUBLE" property="sharpRatio120" />
+		<result column="sharp_ratio_250" jdbcType="DOUBLE" property="sharpRatio250" />
+		<result column="sharp_ratio_500" jdbcType="DOUBLE" property="sharpRatio500" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_stock_sharp_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.SharpRatio">
+		insert into t_stock_sharp_ratio (stock_code, sharp_ratio_20,
+		sharp_ratio_120,
+		sharp_ratio_250, sharp_ratio_500)
+		values (#{stockCode,jdbcType=VARCHAR}, #{sharpRatio20,jdbcType=DOUBLE},
+		#{sharpRatio120,jdbcType=DOUBLE},
+		#{sharpRatio250,jdbcType=DOUBLE}, #{sharpRatio500,jdbcType=DOUBLE})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.SharpRatio">
+		update t_stock_sharp_ratio
+		set sharp_ratio_20 = #{sharpRatio20,jdbcType=DOUBLE},
+		sharp_ratio_120 = #{sharpRatio120,jdbcType=DOUBLE},
+		sharp_ratio_250 = #{sharpRatio250,jdbcType=DOUBLE},
+		sharp_ratio_500 = #{sharpRatio500,jdbcType=DOUBLE}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, sharp_ratio_20, sharp_ratio_120,
+		sharp_ratio_250,
+		sharp_ratio_500
+		from t_stock_sharp_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, sharp_ratio_20, sharp_ratio_120, sharp_ratio_250,
+		sharp_ratio_500
+		from t_stock_sharp_ratio
+	</select>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.BaseEarningsMapper">
+	<resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.BaseEarnings">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<id column="trade_day" jdbcType="INTEGER" property="tradeDay" />
+		<result column="stock_earnings" jdbcType="DOUBLE" property="stockEarnings" />
+		<result column="earnings_type" jdbcType="CHAR" property="earningsType" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from t_stock_base_earnings
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+		and trade_day = #{tradeDay,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.BaseEarnings">
+		insert into t_stock_base_earnings (stock_code, trade_day, stock_earnings,
+		earnings_type)
+		values (#{stockCode,jdbcType=VARCHAR}, #{tradeDay,jdbcType=INTEGER},
+		#{stockEarnings,jdbcType=DOUBLE},
+		#{earningsType,jdbcType=CHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.BaseEarnings">
+		update t_stock_base_earnings
+		set stock_earnings = #{stockEarnings,jdbcType=DOUBLE},
+		earnings_type = #{earningsType,jdbcType=CHAR}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+		and trade_day = #{tradeDay,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, trade_day, stock_earnings,
+		earnings_type
+		from t_stock_base_earnings
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+		and trade_day = #{tradeDay,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, trade_day, stock_earnings, earnings_type
+		from t_stock_base_earnings
+	</select>
+</mapper>

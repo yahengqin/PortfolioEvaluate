@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.FluctuationRatioMapper">
+	<resultMap id="BaseResultMap"
+		type="com.hundsun.hot.portfolio.model.FluctuationRatio">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="fluctuation_ratio_20" jdbcType="DOUBLE"
+			property="fluctuationRatio20" />
+		<result column="fluctuation_ratio_120" jdbcType="DOUBLE"
+			property="fluctuationRatio120" />
+		<result column="fluctuation_ratio_250" jdbcType="DOUBLE"
+			property="fluctuationRatio250" />
+		<result column="fluctuation_ratio_500" jdbcType="DOUBLE"
+			property="fluctuationRatio500" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_stock_fluctuation_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.FluctuationRatio">
+		insert into t_stock_fluctuation_ratio (stock_code, fluctuation_ratio_20,
+		fluctuation_ratio_120,
+		fluctuation_ratio_250, fluctuation_ratio_500)
+		values (#{stockCode,jdbcType=VARCHAR},
+		#{fluctuationRatio20,jdbcType=DOUBLE},
+		#{fluctuationRatio120,jdbcType=DOUBLE},
+		#{fluctuationRatio250,jdbcType=DOUBLE},
+		#{fluctuationRatio500,jdbcType=DOUBLE})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.FluctuationRatio">
+		update t_stock_fluctuation_ratio
+		set fluctuation_ratio_20 = #{fluctuationRatio20,jdbcType=DOUBLE},
+		fluctuation_ratio_120 = #{fluctuationRatio120,jdbcType=DOUBLE},
+		fluctuation_ratio_250 = #{fluctuationRatio250,jdbcType=DOUBLE},
+		fluctuation_ratio_500 = #{fluctuationRatio500,jdbcType=DOUBLE}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, fluctuation_ratio_20,
+		fluctuation_ratio_120,
+		fluctuation_ratio_250, fluctuation_ratio_500
+		from t_stock_fluctuation_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, fluctuation_ratio_20, fluctuation_ratio_120,
+		fluctuation_ratio_250,
+		fluctuation_ratio_500
+		from t_stock_fluctuation_ratio
+	</select>
+</mapper>
