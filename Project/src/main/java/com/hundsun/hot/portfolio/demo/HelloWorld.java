@@ -11,5 +11,4 @@ public class HelloWorld {
 	public String helloWorld(){
 		return "index";
 	}
-
 }
