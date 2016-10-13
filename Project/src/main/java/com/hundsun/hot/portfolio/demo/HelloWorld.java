@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HelloWorld {
+	
+	//test conneciton
 	@ResponseBody
 	@RequestMapping("index")
 	public String helloWorld(){
