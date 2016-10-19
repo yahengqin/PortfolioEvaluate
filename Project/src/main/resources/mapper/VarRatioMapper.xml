@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.VarRatioMapper">
+	<resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.VarRatio">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="var_ratio_250" jdbcType="DOUBLE" property="varRatio250" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_stock_var_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.VarRatio">
+		insert into t_stock_var_ratio (stock_code, var_ratio_250)
+		values (#{stockCode,jdbcType=VARCHAR}, #{varRatio250,jdbcType=DOUBLE})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.VarRatio">
+		update t_stock_var_ratio
+		set var_ratio_250 = #{varRatio250,jdbcType=DOUBLE}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, var_ratio_250
+		from t_stock_var_ratio
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, var_ratio_250
+		from t_stock_var_ratio
+	</select>
+</mapper>

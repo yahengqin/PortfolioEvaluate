@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.SumEarningsMapper">
+	<resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.SumEarnings">
+		<id column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="sum_earnings_20" jdbcType="DOUBLE" property="sumEarnings20" />
+		<result column="sum_earnings_120" jdbcType="DOUBLE" property="sumEarnings120" />
+		<result column="sum_earnings_250" jdbcType="DOUBLE" property="sumEarnings250" />
+		<result column="sum_earnings_500" jdbcType="DOUBLE" property="sumEarnings500" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_stock_sum_earnings
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.SumEarnings">
+		insert into t_stock_sum_earnings (stock_code, sum_earnings_20,
+		sum_earnings_120,
+		sum_earnings_250, sum_earnings_500)
+		values (#{stockCode,jdbcType=VARCHAR}, #{sumEarnings20,jdbcType=DOUBLE},
+		#{sumEarnings120,jdbcType=DOUBLE},
+		#{sumEarnings250,jdbcType=DOUBLE}, #{sumEarnings500,jdbcType=DOUBLE})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.SumEarnings">
+		update t_stock_sum_earnings
+		set sum_earnings_20 = #{sumEarnings20,jdbcType=DOUBLE},
+		sum_earnings_120 = #{sumEarnings120,jdbcType=DOUBLE},
+		sum_earnings_250 = #{sumEarnings250,jdbcType=DOUBLE},
+		sum_earnings_500 = #{sumEarnings500,jdbcType=DOUBLE}
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select 'true' as QUERYID,stock_code, sum_earnings_20, sum_earnings_120,
+		sum_earnings_250,
+		sum_earnings_500
+		from t_stock_sum_earnings
+		where stock_code = #{stockCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select stock_code, sum_earnings_20, sum_earnings_120, sum_earnings_250,
+		sum_earnings_500
+		from t_stock_sum_earnings
+	</select>
+</mapper>

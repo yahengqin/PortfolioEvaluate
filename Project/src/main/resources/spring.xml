@@ -20,10 +20,8 @@
 	
 	<!-- 定时器的驱动 -->
 	<task:annotation-driven />  
-
+	
 	<!--引入配置属性文件 -->
-	<context:property-placeholder location="classpath:application.properties" />
-	<context:property-placeholder location="classpath:jdbc.properties" /> 
-
-
+	<context:property-placeholder location="classpath:*.properties" />
+	
 </beans>
