@@ -8,33 +8,64 @@
 		<result column="earnings_type" jdbcType="CHAR" property="earningsType" />
 	</resultMap>
 	<delete id="deleteByPrimaryKey" parameterType="map">
-		delete from t_stock_base_earnings
+		delete from
+		t_stock_base_earnings
 		where stock_code = #{stockCode,jdbcType=VARCHAR}
 		and trade_day = #{tradeDay,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="com.hundsun.hot.portfolio.model.BaseEarnings">
-		insert into t_stock_base_earnings (stock_code, trade_day, stock_earnings,
+		insert into
+		t_stock_base_earnings (stock_code, trade_day, stock_earnings,
 		earnings_type)
-		values (#{stockCode,jdbcType=VARCHAR}, #{tradeDay,jdbcType=INTEGER},
+		values (#{stockCode,jdbcType=VARCHAR},
+		#{tradeDay,jdbcType=INTEGER},
 		#{stockEarnings,jdbcType=DOUBLE},
 		#{earningsType,jdbcType=CHAR})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.BaseEarnings">
-		update t_stock_base_earnings
-		set stock_earnings = #{stockEarnings,jdbcType=DOUBLE},
-		earnings_type = #{earningsType,jdbcType=CHAR}
-		where stock_code = #{stockCode,jdbcType=VARCHAR}
-		and trade_day = #{tradeDay,jdbcType=INTEGER}
+		update
+		t_stock_base_earnings
+		set stock_earnings =
+		#{stockEarnings,jdbcType=DOUBLE},
+		earnings_type =
+		#{earningsType,jdbcType=CHAR}
+		where stock_code =
+		#{stockCode,jdbcType=VARCHAR}
+		and trade_day =
+		#{tradeDay,jdbcType=INTEGER}
 	</update>
 	<select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
 		select 'true' as QUERYID,stock_code, trade_day, stock_earnings,
 		earnings_type
 		from t_stock_base_earnings
-		where stock_code = #{stockCode,jdbcType=VARCHAR}
-		and trade_day = #{tradeDay,jdbcType=INTEGER}
+		where stock_code =
+		#{stockCode,jdbcType=VARCHAR}
+		and trade_day =
+		#{tradeDay,jdbcType=INTEGER}
 	</select>
 	<select id="selectAll" resultMap="BaseResultMap">
-		select stock_code, trade_day, stock_earnings, earnings_type
+		select stock_code, trade_day,
+		stock_earnings, earnings_type
 		from t_stock_base_earnings
 	</select>
+
+	<select id="getStockCodeList" resultMap="java.lang.String">
+		SELECT DISTINCT
+		stock_code
+		FROM
+		t_stock_base_earnings
+	</select>
+
+	<select id="getStockBaseEarnings" parameterType="map" resultMap="BaseResultMap">
+		SELECT
+		stock_code, trade_day,
+		stock_earnings, earnings_type
+		FROM
+		t_stock_base_earnings
+		WHERE
+		stock_code = #{stockCode,jdbcType=VARCHAR}
+		AND trade_day > #{startDate,jdbcType=INTEGER}
+		AND trade_day < #{endDate,jdbcType=INTEGER}
+	</select>
+
 </mapper>
