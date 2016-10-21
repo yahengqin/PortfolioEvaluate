@@ -35,32 +35,42 @@ public class BaseEarningsSrvImpl implements BaseEarningsService {
 
 	@Override
 	public BaseEarnings getRecordByKey(String stockCode, Integer tradeDay) {
-		// TODO Auto-generated method stub
-		return null;
+		BaseEarnings result = null;
+		if(stockCode != null && tradeDay != null){
+			result = mapper.selectByPrimaryKey(stockCode, tradeDay);
+		}
+		return result;
 	}
 
 	@Override
 	public List<BaseEarnings> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<BaseEarnings> result = null;
+		result = mapper.selectAll();
+		return result;
 	}
 
 	@Override
-	public int updateByKey(BaseEarnings record) {
-		// TODO Auto-generated method stub
+	public int update(BaseEarnings record) {
+		if(record != null){
+			mapper.updateByPrimaryKey(record);
+		}
 		return 0;
 	}
 
 	@Override
 	public List<String> getStockCodeList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> result = null;
+		result = mapper.getStockCodeList();
+		return result;
 	}
 
 	@Override
 	public List<BaseEarnings> getStockBaseEarnings(String stockCode, Integer startDate, Integer endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		List<BaseEarnings> result = null;
+		if(stockCode != null && startDate != null && endDate!= null){
+			result = mapper.getStockBaseEarnings(stockCode, startDate, endDate);
+		}
+		return result;
 	}
 
 }

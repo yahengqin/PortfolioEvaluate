@@ -13,7 +13,7 @@ public interface BaseEarningsService {
 
     List<BaseEarnings> getAll();
 
-    int updateByKey(BaseEarnings record);
+    int update(BaseEarnings record);
     
     /**
      * @Description 获取所有的股票列表
