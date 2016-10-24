@@ -15,4 +15,5 @@ public interface VarRatioService {
 
     int update(VarRatio record);
     
+    VarRatio computeLasestData(String stockCode);
 }

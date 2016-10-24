@@ -3,7 +3,7 @@ package com.hundsun.hot.portfolio.service.interfaces;
 import com.hundsun.hot.portfolio.model.FluctuationRatio;
 import java.util.List;
 
-public interface FluctuationRatioService {
+public interface FluctuationRatioService{
 
     int delete(String stockCode);
 
@@ -14,4 +14,6 @@ public interface FluctuationRatioService {
     FluctuationRatio getRecordByKey(String stockCode);
 
     List<FluctuationRatio> getAll();
+    
+    FluctuationRatio computeLasestData(String stockCode);
 }

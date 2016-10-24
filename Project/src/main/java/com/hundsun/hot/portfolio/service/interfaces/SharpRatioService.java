@@ -13,4 +13,6 @@ public interface SharpRatioService {
     List<SharpRatio> getAll();
 
     int update(SharpRatio record);
+    
+    SharpRatio computeLasestData(String stockCode);
 }

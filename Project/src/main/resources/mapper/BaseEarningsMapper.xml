@@ -64,8 +64,23 @@
 		t_stock_base_earnings
 		WHERE
 		stock_code = #{stockCode,jdbcType=VARCHAR}
-		AND trade_day > #{startDate,jdbcType=INTEGER}
-		AND trade_day < #{endDate,jdbcType=INTEGER}
+		AND trade_day &gt; #{startDate,jdbcType=INTEGER}
+		AND trade_day &lt;
+		#{endDate,jdbcType=INTEGER}
+	</select>
+
+	<select id="getBaseEarningsPrevious" parameterType="map"
+		resultMap="BaseResultMap">
+		SELECT
+		*
+		FROM
+		t_stock_base_earnings
+		WHERE
+		stock_code = #{stockCode,jdbcType=VARCHAR}
+		AND trade_day <![CDATA[ <= ]]> #{startDate,jdbcType=INTEGER}
+		ORDER BY
+		trade_day
+		LIMIT #{previousDay,jdbcType=INTEGER}
 	</select>
 
 </mapper>

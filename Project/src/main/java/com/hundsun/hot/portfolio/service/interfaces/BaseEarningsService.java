@@ -29,4 +29,5 @@ public interface BaseEarningsService {
      * @return List<BaseEarnings>
      */
     List<BaseEarnings> getStockBaseEarnings(String stockCode ,Integer startDate, Integer endDate);
+
 }
