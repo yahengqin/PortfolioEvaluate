@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hundsun.hot.portfolio.compute.FluctuationCompute;
+import com.hundsun.hot.portfolio.compute.interfaces.FluctuationCompute;
 import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.FluctuationRatioMapper;
 import com.hundsun.hot.portfolio.model.BaseEarnings;
@@ -86,8 +85,8 @@ public class FluctuationRatioSrvImpl implements FluctuationRatioService {
 	private double doCompute(String stockCode,int dayPrevious){
 		List<BaseEarnings> listForCompute = null;
 		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
-		double[] res = fluCompute.execute(listForCompute);
-		return res[CommonData.INDEX_0];
+		double res = fluCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 }

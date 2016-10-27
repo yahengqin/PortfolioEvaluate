@@ -3,7 +3,7 @@ package com.hundsun.hot.portfolio.service.implement;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hundsun.hot.portfolio.compute.VarCompute;
+import com.hundsun.hot.portfolio.compute.interfaces.VarCompute;
 import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.VarRatioMapper;
 import com.hundsun.hot.portfolio.model.BaseEarnings;
@@ -82,8 +82,8 @@ public class VarRatioSrvImpl implements VarRatioService {
 	private double doCompute(String stockCode,int dayPrevious){
 		List<BaseEarnings> listForCompute = null;
 		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
-		double[] res = varCompute.execute(listForCompute);
-		return res[CommonData.INDEX_0];
+		double res = varCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 }

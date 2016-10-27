@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hundsun.hot.portfolio.compute.SumEarningsCompute;
+import com.hundsun.hot.portfolio.compute.interfaces.SumEarningsCompute;
 import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.SumEarningsMapper;
 import com.hundsun.hot.portfolio.model.BaseEarnings;
@@ -85,8 +85,8 @@ public class SumEarningsSrvImpl implements SumEarningsService {
 	private double doCompute(String stockCode,int dayPrevious){
 		List<BaseEarnings> listForCompute = null;
 		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
-		double[] res = sumEarningsCompute.execute(listForCompute);
-		return res[CommonData.INDEX_0];
+		double res = sumEarningsCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 }

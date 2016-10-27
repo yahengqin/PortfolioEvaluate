@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hundsun.hot.portfolio.compute.MaxDrawDownCompute;
+import com.hundsun.hot.portfolio.compute.interfaces.DrawDownCompute;
 import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.MaxDrawDownMapper;
 import com.hundsun.hot.portfolio.model.BaseEarnings;
@@ -24,7 +23,7 @@ public class MaxDrawDownSrvImpl implements MaxDrawDownService {
 	private BaseEarningsMapper baseEarnMapper;
 	
 	@Autowired
-	private MaxDrawDownCompute maxDrawDownCompute;
+	private DrawDownCompute drawDownCompute;
 
 	@Override
 	public int delete(String stockCode) {
@@ -87,8 +86,8 @@ public class MaxDrawDownSrvImpl implements MaxDrawDownService {
 	private double doCompute(String stockCode,int dayPrevious){
 		List<BaseEarnings> listForCompute = null;
 		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
-		double[] res = maxDrawDownCompute.execute(listForCompute);
-		return res[CommonData.INDEX_0];
+		double res = drawDownCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 

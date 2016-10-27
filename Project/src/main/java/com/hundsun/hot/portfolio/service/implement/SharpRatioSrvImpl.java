@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.hundsun.hot.portfolio.compute.SharpCompute;
+import com.hundsun.hot.portfolio.compute.interfaces.SharpCompute;
 import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.SharpRatioMapper;
 import com.hundsun.hot.portfolio.model.BaseEarnings;
@@ -86,8 +85,8 @@ public class SharpRatioSrvImpl implements SharpRatioService {
 	private double doCompute(String stockCode,int dayPrevious){
 		List<BaseEarnings> listForCompute = null;
 		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
-		double[] res = sharpCompute.execute(listForCompute);
-		return res[CommonData.INDEX_0];
+		double res = sharpCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 }

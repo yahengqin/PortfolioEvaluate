@@ -1,4 +1,4 @@
-package com.hundsun.hot.portfolio.compute;
+package com.hundsun.hot.portfolio.compute.implement;
 
 import java.util.List;
 
@@ -37,18 +37,27 @@ public class DataTools {
 	}
 	
 	/**
-	 * @Description 将基础收益数组处理为计算可用的double数组
-	 * @param list
+	 * @Description 将基础收益数组处理为计算可用的double数组，但是只允许List为单支股票的基础收益
+	 * @param dataList
 	 * @return double[]
 	 */
-	protected static double[] dealBaseEarnings(List<BaseEarnings> list) {
+	protected static double[] dealBaseEarnings(List<BaseEarnings> dataList) {
 		double[] result = null;
-		if(list != null && list.isEmpty()!= true){
-			int size = list.size();
-			result = new double[size];
-			for(int i = 0 ;i < size ;i++){
-				result[i] = list.get(i).getStockEarnings();
+		if(dataList == null || dataList.isEmpty()){
+			return result;
+		}
+		String tempCode = dataList.get(0).getStockCode();
+		if(tempCode != null){
+			for(BaseEarnings baseEarnings : dataList){
+				if(baseEarnings.getStockCode().equals(tempCode)){
+					return result;
+				}
 			}
+		}
+		int size = dataList.size();
+		result = new double[size];
+		for(int i = 0 ;i < size ;i++){
+			result[i] = dataList.get(i).getStockEarnings();
 		}
 		return result;
 	}
