@@ -3,20 +3,31 @@ package com.hundsun.hot.portfolio.service.implement;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.hundsun.hot.portfolio.compute.interfaces.VarCompute;
+import com.hundsun.hot.portfolio.mapper.BaseEarningsMapper;
 import com.hundsun.hot.portfolio.mapper.VarRatioMapper;
+import com.hundsun.hot.portfolio.model.BaseEarnings;
 import com.hundsun.hot.portfolio.model.VarRatio;
 import com.hundsun.hot.portfolio.service.interfaces.VarRatioService;
+import com.hundsun.hot.portfolio.tools.CommonData;
+import com.hundsun.hot.portfolio.tools.DateTools;
 
 @Service
 public class VarRatioSrvImpl implements VarRatioService {
 
 	@Autowired
-	private VarRatioMapper mapper;
+	private VarRatioMapper varMapper;
+	
+	@Autowired
+	private BaseEarningsMapper baseEarnMapper;
+	
+	@Autowired
+	private VarCompute varCompute;
 
 	@Override
 	public int delete(String stockCode) {
 		if (stockCode != null) {
-			return mapper.deleteByPrimaryKey(stockCode);
+			return varMapper.deleteByPrimaryKey(stockCode);
 		}
 		return -1;
 	}
@@ -25,7 +36,7 @@ public class VarRatioSrvImpl implements VarRatioService {
 	public int insert(VarRatio record) {
 		if (record != null) {
 			if (record.getStockCode() != null) {
-				return mapper.insert(record);
+				return varMapper.insert(record);
 			}
 		}
 		return -1;
@@ -35,7 +46,7 @@ public class VarRatioSrvImpl implements VarRatioService {
 	public VarRatio getRecordByKey(String stockCode) {
 		VarRatio result = null;
 		if (stockCode != null) {
-			result = mapper.selectByPrimaryKey(stockCode);
+			result = varMapper.selectByPrimaryKey(stockCode);
 		}
 		return result;
 	}
@@ -43,7 +54,7 @@ public class VarRatioSrvImpl implements VarRatioService {
 	@Override
 	public List<VarRatio> getAll() {
 		List<VarRatio> result = null;
-		result = mapper.selectAll();
+		result = varMapper.selectAll();
 		return result;
 	}
 
@@ -51,10 +62,28 @@ public class VarRatioSrvImpl implements VarRatioService {
 	public int update(VarRatio record) {
 		if (record != null) {
 			if (record.getStockCode() != null) {
-				return mapper.updateByPrimaryKey(record);
+				return varMapper.updateByPrimaryKey(record);
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public VarRatio computeLasestData(String stockCode) {
+		VarRatio result = null;
+		if(stockCode != null){
+			result = new VarRatio();
+			result.setVarRatio250(doCompute(stockCode, CommonData.DAY_20));
+			result.setStockCode(stockCode);
+		}
+		return result;
+	}
+	
+	private double doCompute(String stockCode,int dayPrevious){
+		List<BaseEarnings> listForCompute = null;
+		listForCompute = baseEarnMapper.getBaseEarningsPrevious(stockCode, DateTools.getToday(), dayPrevious);
+		double res = varCompute.computeSingle(listForCompute);
+		return res;
 	}
 
 }

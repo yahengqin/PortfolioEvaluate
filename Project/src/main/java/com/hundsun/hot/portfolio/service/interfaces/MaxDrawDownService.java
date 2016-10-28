@@ -14,4 +14,6 @@ public interface MaxDrawDownService {
     List<MaxDrawDown> getAll();
 
     int update(MaxDrawDown record);
+    
+    MaxDrawDown computeLasestData(String stockCode);
 }

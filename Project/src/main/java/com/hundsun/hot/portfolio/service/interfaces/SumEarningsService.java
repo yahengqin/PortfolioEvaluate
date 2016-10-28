@@ -15,4 +15,6 @@ public interface SumEarningsService {
 
     int update(SumEarnings record);
     
+    SumEarnings computeLasestData(String stockCode);
+    
 }
