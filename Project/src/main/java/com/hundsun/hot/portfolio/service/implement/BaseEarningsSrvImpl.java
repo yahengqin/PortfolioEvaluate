@@ -73,4 +73,13 @@ public class BaseEarningsSrvImpl implements BaseEarningsService {
 		return result;
 	}
 
+	@Override
+	public List<BaseEarnings> getBaseEarningsPrevious(String stockCode, Integer startDate, Integer previousDay) {
+		List<BaseEarnings> result = null;
+		if(stockCode != null && startDate != null && previousDay!= null){
+			result = mapper.getBaseEarningsPrevious(stockCode, startDate, previousDay);
+		}
+		return result;
+	}
+
 }

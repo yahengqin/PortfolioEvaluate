@@ -29,5 +29,14 @@ public interface BaseEarningsService {
      * @return List<BaseEarnings>
      */
     List<BaseEarnings> getStockBaseEarnings(String stockCode ,Integer startDate, Integer endDate);
+    
+	/**
+	 * @Description 获取指定日期前N天的基础收益数据
+	 * @param stockCode
+	 * @param startDate
+	 * @param previousDay
+	 * @return List<BaseEarnings>
+	 */
+	List<BaseEarnings> getBaseEarningsPrevious(String stockCode, Integer startDate, Integer previousDay);
 
 }

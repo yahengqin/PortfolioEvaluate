@@ -24,4 +24,6 @@
 	<!--引入配置属性文件 -->
 	<context:property-placeholder location="classpath:*.properties" />
 	
+	<bean id="beanWare" class="com.hundsun.hot.portfolio.tools.SpringBeanWare" />
+	
 </beans>
