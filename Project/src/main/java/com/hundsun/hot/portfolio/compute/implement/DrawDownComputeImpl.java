@@ -40,7 +40,7 @@ public class DrawDownComputeImpl implements DrawDownCompute{
 
 	@Override
 	public double computeSingle(List<BaseEarnings> dataList) {
-		double result = Double.MAX_VALUE;
+		double result = 0;
 		if(dataList != null && !dataList.isEmpty()){
 			double[][] dataForCompute = new double[1][];
 			dataForCompute[CommonData.INDEX_0] =  DataTools.dealBaseEarnings(dataList);

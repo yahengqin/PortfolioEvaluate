@@ -25,10 +25,10 @@ public class SharpComputeImpl implements SharpCompute {
 
 	@Override
 	public double computeSingle(List<BaseEarnings> dataList) {
-		double result = Double.MAX_VALUE;
+		double result = 0;
 		if (dataList != null && !dataList.isEmpty()) {
 			double[][] dataForCompute = new double[1][];
-			dataForCompute[CommonData.INDEX_0] =  DataTools.dealBaseEarnings(dataList);
+			dataForCompute[CommonData.INDEX_0] = DataTools.dealBaseEarnings(dataList);
 			double[] tempResult = this.compute(dataForCompute);
 			result = tempResult[CommonData.INDEX_0];
 		}
