@@ -49,7 +49,7 @@
 		from t_stock_base_earnings
 	</select>
 
-	<select id="getStockCodeList" resultMap="java.lang.String">
+	<select id="getStockCodeList" resultType="java.lang.String">
 		SELECT DISTINCT
 		stock_code
 		FROM
