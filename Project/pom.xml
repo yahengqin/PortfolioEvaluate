@@ -18,6 +18,7 @@
 		<jackson.version>2.8.3</jackson.version>
 		<commonsdbcp.version>1.4</commonsdbcp.version>
 		<commonslang.version>2.6</commonslang.version>
+		<logback.version>1.1.7</logback.version>
 	</properties>
 
 	<dependencies>
@@ -123,11 +124,28 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>${commonsdbcp.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commonslang.version}</version>
+		</dependency>
+
+		<!-- 日志架包LogBack -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-access</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 
 	</dependencies>
