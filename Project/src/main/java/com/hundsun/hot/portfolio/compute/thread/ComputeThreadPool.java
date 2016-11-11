@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @date 2016年7月22日 下午1:55:02
  */
 @Component
-public class ComputeThreadPool {
+public final class ComputeThreadPool {
 	
 	private static ThreadPoolExecutor computeThreadPool ;
 	
