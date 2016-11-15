@@ -64,6 +64,7 @@ CREATE TABLE `t_user_info` (
   `wechat_id` varchar(30) DEFAULT NULL,
   `phone_num` int(11) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
+  `status` varchar(2) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
