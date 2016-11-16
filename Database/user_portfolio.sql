@@ -58,14 +58,18 @@ CREATE TABLE `t_stock_base_info` (
 DROP TABLE IF EXISTS `t_user_info`;
 CREATE TABLE `t_user_info` (
   `user_id` int(11) NOT NULL,
-  `user_name` varchar(30) DEFAULT NULL,
+  `user_acco` varchar(30) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
+  `user_name` varchar(30) DEFAULT NULL,
   `work_id` int(11) DEFAULT NULL,
   `wechat_id` varchar(30) DEFAULT NULL,
   `phone_num` int(11) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `status` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_acco` (`user_acco`),
+  UNIQUE KEY `work_id` (`work_id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
