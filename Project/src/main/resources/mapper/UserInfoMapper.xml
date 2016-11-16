@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hundsun.hot.portfolio.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hundsun.hot.portfolio.model.UserInfo">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_acco" jdbcType="VARCHAR" property="userAcco" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="work_id" jdbcType="INTEGER" property="workId" />
+    <result column="wechat_id" jdbcType="VARCHAR" property="wechatId" />
+    <result column="phone_num" jdbcType="INTEGER" property="phoneNum" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hundsun.hot.portfolio.model.UserInfo">
+    insert into t_user_info (user_id, user_acco, password, 
+      user_name, work_id, wechat_id, 
+      phone_num, email, status
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userAcco,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{workId,jdbcType=INTEGER}, #{wechatId,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.hundsun.hot.portfolio.model.UserInfo">
+    update t_user_info
+    set user_acco = #{userAcco,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      work_id = #{workId,jdbcType=INTEGER},
+      wechat_id = #{wechatId,jdbcType=VARCHAR},
+      phone_num = #{phoneNum,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 'true' as QUERYID,user_id, user_acco, password, user_name, work_id, wechat_id, 
+    phone_num, email, status
+    from t_user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select user_id, user_acco, password, user_name, work_id, wechat_id, phone_num, email, 
+    status
+    from t_user_info
+  </select>
+  
+  <select id="selectByUserAcco" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 'true' as QUERYID,user_id, user_acco, password, user_name, work_id, wechat_id, 
+    phone_num, email, status
+    from t_user_info
+    where user_acco = #{userAcco,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- TODO 根据具体的登录逻辑需求进行修正 --> 
+  <select id="login" parameterType="map" resultMap="BaseResultMap">
+    select 'true' as QUERYID,user_id, user_acco, password, user_name, work_id, wechat_id, 
+    phone_num, email, status
+    from t_user_info
+    where user_acco = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>
