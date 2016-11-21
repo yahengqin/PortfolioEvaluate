@@ -20,7 +20,7 @@ public class SharpComputeImpl implements SharpCompute {
 	
 	private static final double NO_RISK_EARNINGS = 0.0175;
 	
-	//private static Logger logger = LoggerFactory.getLogger(SharpComputeImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(SharpComputeImpl.class);
 
 	static {
 		try {
@@ -40,7 +40,7 @@ public class SharpComputeImpl implements SharpCompute {
 			if (tempResult != null) {
 				result = tempResult[CommonData.INDEX_0];
 			}else{
-				//logger.error("compute stock "+dataList.get(0).getStockCode()+" sharp ratio error");
+				logger.error("compute stock "+dataList.get(0).getStockCode()+" sharp ratio error");
 			}
 		}
 		return result;
