@@ -1,6 +1,9 @@
 package com.hundsun.hot.portfolio.compute.implement;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hundsun.hot.portfolio.compute.interfaces.FluctuationCompute;
@@ -15,6 +18,8 @@ public class FluctuationComputeImpl implements FluctuationCompute {
 
 	private static StdMatlab stdMatlab;
 
+	private static Logger logger = LoggerFactory.getLogger(FluctuationComputeImpl.class);
+	
 	static {
 		try {
 			stdMatlab = new StdMatlab();
@@ -45,7 +50,11 @@ public class FluctuationComputeImpl implements FluctuationCompute {
 			double[][] dataForCompute = new double[1][];
 			dataForCompute[CommonData.INDEX_0] = DataTools.dealBaseEarnings(dataList);
 			double[] tempResult = this.compute(dataForCompute);
-			result = tempResult[CommonData.INDEX_0];
+			if (tempResult != null) {
+				result = tempResult[CommonData.INDEX_0];
+			}else{
+				logger.error("compute stock "+dataList.get(0).getStockCode()+" fluctuation ratio error");
+			}
 		}
 		return result;
 	}

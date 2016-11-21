@@ -2,6 +2,8 @@ package com.hundsun.hot.portfolio.compute.implement;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hundsun.hot.portfolio.compute.interfaces.VarCompute;
@@ -13,7 +15,10 @@ import com.mathworks.toolbox.javabuilder.MWNumericArray;
 
 @Component
 public class VarComputeImpl implements VarCompute {
+	
 	private static VaRMatlab vaRMatlab;
+
+	private static Logger logger = LoggerFactory.getLogger(VarComputeImpl.class);
 
 	static {
 		try {
@@ -30,7 +35,11 @@ public class VarComputeImpl implements VarCompute {
 			double[][] dataForCompute = new double[1][];
 			dataForCompute[CommonData.INDEX_0] =  DataTools.dealBaseEarnings(dataList);
 			double[] tempResult = this.compute(dataForCompute);
-			result = tempResult[CommonData.INDEX_0];
+			if(tempResult != null){
+				result = tempResult[CommonData.INDEX_0];
+			}else{
+				logger.error("compute stock "+dataList.get(0).getStockCode()+" var error");
+			}
 		}
 		return result;
 	}

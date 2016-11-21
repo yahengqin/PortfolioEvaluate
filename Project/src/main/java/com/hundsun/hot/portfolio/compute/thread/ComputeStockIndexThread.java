@@ -71,9 +71,9 @@ public class ComputeStockIndexThread implements Runnable {
 		//这里其实可以继续优化为多线程
 		computeFlu();
 		computeDrawDown();
-		computeSharp();
 		computeSumEarn();
 		computeVar();
+		computeSharp();
 	}
 	
 	private void computeFlu(){
@@ -87,7 +87,12 @@ public class ComputeStockIndexThread implements Runnable {
 		fluctuationRatio.setFluctuationRatio250(flu250);
 		double flu500 = fluCompute.computeSingle(baseEarnings500);
 		fluctuationRatio.setFluctuationRatio500(flu500);
-		fluSrv.insert(fluctuationRatio);
+		if(fluSrv.getRecordByKey(stockCode) != null){
+			fluSrv.update(fluctuationRatio);
+		}else{
+			fluSrv.insert(fluctuationRatio);
+		}
+
 	}
 
 	private void computeDrawDown(){
@@ -101,7 +106,11 @@ public class ComputeStockIndexThread implements Runnable {
 		maxDrawDown.setMaxDrawDown250(draw250);
 		double draw500 = drawDownCompute.computeSingle(baseEarnings500);
 		maxDrawDown.setMaxDrawDown500(draw500);
-		drawDownSrv.insert(maxDrawDown);
+		if(drawDownSrv.getRecordByKey(stockCode) != null){
+			drawDownSrv.update(maxDrawDown);
+		}else{
+			drawDownSrv.insert(maxDrawDown);
+		}
 	}
 	
 	private void computeSharp(){
@@ -115,7 +124,12 @@ public class ComputeStockIndexThread implements Runnable {
 		sharpRatio.setSharpRatio250(sharp250);
 		double sharp500 = sharpCompute.computeSingle(baseEarnings500);
 		sharpRatio.setSharpRatio500(sharp500);
-		sharpSrv.insert(sharpRatio);
+		if(sharpSrv.getRecordByKey(stockCode)!=null){
+			sharpSrv.update(sharpRatio);
+		}else{
+			sharpSrv.insert(sharpRatio);
+		}
+	
 	}
 	
 	private void computeSumEarn(){
@@ -129,7 +143,12 @@ public class ComputeStockIndexThread implements Runnable {
 		sumEarnings.setSumEarnings250(sum250);
 		double sum500 = sumEarnCompute.computeSingle(baseEarnings500);
 		sumEarnings.setSumEarnings500(sum500);
-		sumEarnSrv.insert(sumEarnings);
+		if(sumEarnSrv.getRecordByKey(stockCode)!=null){
+			sumEarnSrv.update(sumEarnings);
+		}else{
+			sumEarnSrv.insert(sumEarnings);
+		}
+	
 	}
 	
 	private void computeVar(){
@@ -137,6 +156,10 @@ public class ComputeStockIndexThread implements Runnable {
 		varRatio.setStockCode(stockCode);
 		double var250 = varCompute.computeSingle(baseEarnings250);
 		varRatio.setVarRatio250(var250);
-		varRatioSrv.insert(varRatio);
+		if(varRatioSrv.getRecordByKey(stockCode)!= null){
+			varRatioSrv.update(varRatio);
+		}else{
+			varRatioSrv.insert(varRatio);
+		}
 	}
 }

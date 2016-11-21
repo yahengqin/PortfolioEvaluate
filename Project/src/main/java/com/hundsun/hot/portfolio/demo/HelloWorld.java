@@ -2,17 +2,23 @@ package com.hundsun.hot.portfolio.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hundsun.hot.portfolio.model.UserInfo;
+import com.hundsun.hot.portfolio.timer.IndexComputeTask;
 import com.hundsun.hot.portfolio.tools.Identity;
 
 @Controller
 public class HelloWorld {
 	
 	private static Logger logger=LoggerFactory.getLogger(HelloWorld.class);
+	
+	@Autowired
+	private IndexComputeTask computeTask;
+	
 	//test conneciton
 	@ResponseBody
 	@RequestMapping("index")
@@ -33,6 +39,11 @@ public class HelloWorld {
 		Identity.login(userInfo);
 		System.out.println(Identity.getLoadUser());
 		return "done";
+	}
+	
+	@RequestMapping("compute")
+	public void testCompute() {
+		computeTask.compute();
 	}
 
 }

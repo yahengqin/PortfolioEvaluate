@@ -87,9 +87,12 @@ CREATE TABLE `t_stock_base_earnings` (
 DROP TABLE IF EXISTS `t_stock_base_info`;
 CREATE TABLE `t_stock_base_info` (
   `stock_code` varchar(20) NOT NULL,
-  `market` varchar(10) DEFAULT NULL,
+  `market` varchar(20) DEFAULT NULL,
   `stock_name` varchar(40) DEFAULT NULL,
-  `stock_style` varchar(20) DEFAULT NULL,
+  `industry_code` varchar(20) DEFAULT NULL,
+  `industry_type` varchar(20) DEFAULT NULL,
+  `industry_name` varchar(40) DEFAULT NULL,
+  `trade_status` int(5) NOT NULL DEFAULT '5',
   PRIMARY KEY (`stock_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -2,6 +2,8 @@ package com.hundsun.hot.portfolio.compute.implement;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.hundsun.hot.portfolio.compute.interfaces.SumEarningsCompute;
@@ -15,6 +17,8 @@ import com.mathworks.toolbox.javabuilder.MWNumericArray;
 public class SumEarningsComputeImpl implements SumEarningsCompute {
 
 	private static CumReturnMatlab cumReturnMatlab;
+
+	private static Logger logger = LoggerFactory.getLogger(SumEarningsComputeImpl.class);
 
 	static {
 		try {
@@ -46,7 +50,11 @@ public class SumEarningsComputeImpl implements SumEarningsCompute {
 			double[][] dataForCompute = new double[1][];
 			dataForCompute[CommonData.INDEX_0] =  DataTools.dealBaseEarnings(dataList);
 			double[] tempResult = this.compute(dataForCompute);
-			result = tempResult[CommonData.INDEX_0];
+			if(tempResult != null){
+				result = tempResult[CommonData.INDEX_0];
+			}else{
+				logger.error("compute stock "+dataList.get(0).getStockCode()+" sumEarnings error");
+			}
 		}
 		return result;
 	}

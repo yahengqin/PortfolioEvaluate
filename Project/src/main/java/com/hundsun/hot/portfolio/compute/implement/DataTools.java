@@ -9,6 +9,7 @@ import com.mathworks.toolbox.javabuilder.MWNumericArray;
 public class DataTools {
 	
 	public static int PARA_NUM_ONE = 1;
+	public static int PARA_NUM_TWO = 2;
 	
 	/**
 	 * @Description 将矩阵处理为matlab识别的矩阵
@@ -49,7 +50,7 @@ public class DataTools {
 		String tempCode = dataList.get(0).getStockCode();
 		if(tempCode != null){
 			for(BaseEarnings baseEarnings : dataList){
-				if(baseEarnings.getStockCode().equals(tempCode)){
+				if(!baseEarnings.getStockCode().equals(tempCode)){
 					return result;
 				}
 			}

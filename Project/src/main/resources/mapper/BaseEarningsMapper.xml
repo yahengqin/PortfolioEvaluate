@@ -79,7 +79,7 @@
 		stock_code = #{stockCode,jdbcType=VARCHAR}
 		AND trade_day <![CDATA[ <= ]]> #{startDate,jdbcType=INTEGER}
 		ORDER BY
-		trade_day
+		trade_day DESC
 		LIMIT #{previousDay,jdbcType=INTEGER}
 	</select>
 
