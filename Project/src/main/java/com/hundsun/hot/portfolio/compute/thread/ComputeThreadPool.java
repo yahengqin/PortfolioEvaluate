@@ -26,7 +26,7 @@ public final class ComputeThreadPool {
 
 	private static final Integer MAX_POOL_SIZE = 20;
 	
-	private static final Integer ALIVE_TIME_MINUTES = 10;
+	private static final Integer ALIVE_TIME_MINUTES = 2;
 	
 	public ComputeThreadPool() {
 		computeThreadPool =  new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, ALIVE_TIME_MINUTES, TimeUnit.MINUTES,blockQueue);

@@ -53,7 +53,7 @@ public class ComputeStockIndexThread implements Runnable {
 	
 
 	public ComputeStockIndexThread(String stockCode) {
-		if (stockCode != null && stockCode.trim() != "") {
+		if (stockCode != null && !stockCode.trim().equals("")) {
 			this.stockCode = stockCode;
 			baseEarnings20 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_20);
 			baseEarnings120 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_120);

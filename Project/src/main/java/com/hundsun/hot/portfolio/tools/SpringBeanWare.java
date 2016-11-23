@@ -10,7 +10,7 @@ public class SpringBeanWare implements ApplicationContextAware {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		appContext = applicationContext;
+		SpringBeanWare.appContext = applicationContext;
 	}
 
 	public static Object getBean(String beanName) {
