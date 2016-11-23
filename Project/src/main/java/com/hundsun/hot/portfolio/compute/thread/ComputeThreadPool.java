@@ -5,7 +5,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,11 +25,11 @@ public final class ComputeThreadPool {
 
 	private static final Integer MAX_POOL_SIZE = 20;
 	
-	private static final Integer ALIVE_TIME_MINUTES = 2;
+	private static final Integer ALIVE_TIME_MINUTES = 1;
 	
 	public ComputeThreadPool() {
 		computeThreadPool =  new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, ALIVE_TIME_MINUTES, TimeUnit.MINUTES,blockQueue);
-		computeThreadPool.prestartAllCoreThreads();
+		computeThreadPool.allowCoreThreadTimeOut(true);
 	}
 	
 	public static void execute(Runnable command){
