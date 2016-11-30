@@ -29,10 +29,5 @@ public final class IndexComputeTask {
 			ComputeThreadPool.execute(computeThread);
 		}
 	}
-	
-	//For Test
-	public void compute(){
-		baseIndexCompute();
-	}
 
 }
