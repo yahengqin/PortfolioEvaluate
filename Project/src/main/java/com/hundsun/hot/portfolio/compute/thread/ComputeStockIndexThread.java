@@ -66,6 +66,8 @@ public class ComputeStockIndexThread implements Runnable {
 			baseEarnings120 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_120);
 			baseEarnings250 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_250);
 			baseEarnings500 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_500);
+		}else{
+			logger.error("invalid stock code : " + stockCode );
 		}
 	}
 
@@ -83,7 +85,7 @@ public class ComputeStockIndexThread implements Runnable {
 			computeVar();
 			computeSharp();
 		} catch (Exception e) {
-			logger.error("conpute stock " + stockCode + " error", e);
+			logger.error("conpute stock index " + stockCode + " error", e);
 		}
 	}
 
