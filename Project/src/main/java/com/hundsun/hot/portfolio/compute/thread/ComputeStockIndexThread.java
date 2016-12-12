@@ -1,6 +1,10 @@
 package com.hundsun.hot.portfolio.compute.thread;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hundsun.hot.portfolio.compute.interfaces.DrawDownCompute;
 import com.hundsun.hot.portfolio.compute.interfaces.FluctuationCompute;
 import com.hundsun.hot.portfolio.compute.interfaces.SharpCompute;
@@ -18,9 +22,11 @@ import com.hundsun.hot.portfolio.service.interfaces.MaxDrawDownService;
 import com.hundsun.hot.portfolio.service.interfaces.SharpRatioService;
 import com.hundsun.hot.portfolio.service.interfaces.SumEarningsService;
 import com.hundsun.hot.portfolio.service.interfaces.VarRatioService;
+import com.hundsun.hot.portfolio.timer.IndexComputeTask;
 import com.hundsun.hot.portfolio.tools.CommonData;
 import com.hundsun.hot.portfolio.tools.DateTools;
 import com.hundsun.hot.portfolio.tools.SpringBeanWare;
+
 /**
  * @ClassName ComputeStockIndexThread
  * @Description 更新股票今日的各维度基础数据
@@ -29,6 +35,8 @@ import com.hundsun.hot.portfolio.tools.SpringBeanWare;
  * @date 2016年10月28日 下午2:41:39
  */
 public class ComputeStockIndexThread implements Runnable {
+
+	private static Logger logger = LoggerFactory.getLogger(IndexComputeTask.class);
 
 	// 基础服务service
 	private static final BaseEarningsService baseEarnSrv = SpringBeanWare.getBean(BaseEarningsService.class);
@@ -45,20 +53,21 @@ public class ComputeStockIndexThread implements Runnable {
 	private static final VarCompute varCompute = SpringBeanWare.getBean(VarCompute.class);
 
 	private String stockCode;
-	
+
 	private List<BaseEarnings> baseEarnings20;
 	private List<BaseEarnings> baseEarnings120;
 	private List<BaseEarnings> baseEarnings250;
 	private List<BaseEarnings> baseEarnings500;
-	
 
 	public ComputeStockIndexThread(String stockCode) {
 		if (stockCode != null && !stockCode.trim().equals("")) {
 			this.stockCode = stockCode;
-			baseEarnings20 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_20);
-			baseEarnings120 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_120);
-			baseEarnings250 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_250);
-			baseEarnings500 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(),CommonData.DAY_500);
+			baseEarnings20 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_20);
+			baseEarnings120 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_120);
+			baseEarnings250 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_250);
+			baseEarnings500 = baseEarnSrv.getBaseEarningsPrevious(stockCode, DateTools.getToday(), CommonData.DAY_500);
+		}else{
+			logger.error("invalid stock code : " + stockCode );
 		}
 	}
 
@@ -68,15 +77,19 @@ public class ComputeStockIndexThread implements Runnable {
 	}
 
 	private void doCompute() {
-		//这里其实可以继续优化为多线程
-		computeFlu();
-		computeDrawDown();
-		computeSumEarn();
-		computeVar();
-		computeSharp();
+		// 这里其实可以继续优化为多线程
+		try {
+			computeFlu();
+			computeDrawDown();
+			computeSumEarn();
+			computeVar();
+			computeSharp();
+		} catch (Exception e) {
+			logger.error("conpute stock index " + stockCode + " error", e);
+		}
 	}
-	
-	private void computeFlu(){
+
+	private void computeFlu() {
 		FluctuationRatio fluctuationRatio = new FluctuationRatio();
 		fluctuationRatio.setStockCode(stockCode);
 		double flu20 = fluCompute.computeSingle(baseEarnings20);
@@ -87,15 +100,15 @@ public class ComputeStockIndexThread implements Runnable {
 		fluctuationRatio.setFluctuationRatio250(flu250);
 		double flu500 = fluCompute.computeSingle(baseEarnings500);
 		fluctuationRatio.setFluctuationRatio500(flu500);
-		if(fluSrv.getRecordByKey(stockCode) != null){
+		if (fluSrv.getRecordByKey(stockCode) != null) {
 			fluSrv.update(fluctuationRatio);
-		}else{
+		} else {
 			fluSrv.insert(fluctuationRatio);
 		}
 
 	}
 
-	private void computeDrawDown(){
+	private void computeDrawDown() {
 		MaxDrawDown maxDrawDown = new MaxDrawDown();
 		maxDrawDown.setStockCode(stockCode);
 		double draw20 = drawDownCompute.computeSingle(baseEarnings20);
@@ -106,14 +119,14 @@ public class ComputeStockIndexThread implements Runnable {
 		maxDrawDown.setMaxDrawDown250(draw250);
 		double draw500 = drawDownCompute.computeSingle(baseEarnings500);
 		maxDrawDown.setMaxDrawDown500(draw500);
-		if(drawDownSrv.getRecordByKey(stockCode) != null){
+		if (drawDownSrv.getRecordByKey(stockCode) != null) {
 			drawDownSrv.update(maxDrawDown);
-		}else{
+		} else {
 			drawDownSrv.insert(maxDrawDown);
 		}
 	}
-	
-	private void computeSharp(){
+
+	private void computeSharp() {
 		SharpRatio sharpRatio = new SharpRatio();
 		sharpRatio.setStockCode(stockCode);
 		double sharp20 = sharpCompute.computeSingle(baseEarnings20);
@@ -124,15 +137,15 @@ public class ComputeStockIndexThread implements Runnable {
 		sharpRatio.setSharpRatio250(sharp250);
 		double sharp500 = sharpCompute.computeSingle(baseEarnings500);
 		sharpRatio.setSharpRatio500(sharp500);
-		if(sharpSrv.getRecordByKey(stockCode)!=null){
+		if (sharpSrv.getRecordByKey(stockCode) != null) {
 			sharpSrv.update(sharpRatio);
-		}else{
+		} else {
 			sharpSrv.insert(sharpRatio);
 		}
-	
+
 	}
-	
-	private void computeSumEarn(){
+
+	private void computeSumEarn() {
 		SumEarnings sumEarnings = new SumEarnings();
 		sumEarnings.setStockCode(stockCode);
 		double sum20 = sumEarnCompute.computeSingle(baseEarnings20);
@@ -143,22 +156,22 @@ public class ComputeStockIndexThread implements Runnable {
 		sumEarnings.setSumEarnings250(sum250);
 		double sum500 = sumEarnCompute.computeSingle(baseEarnings500);
 		sumEarnings.setSumEarnings500(sum500);
-		if(sumEarnSrv.getRecordByKey(stockCode)!=null){
+		if (sumEarnSrv.getRecordByKey(stockCode) != null) {
 			sumEarnSrv.update(sumEarnings);
-		}else{
+		} else {
 			sumEarnSrv.insert(sumEarnings);
 		}
-	
+
 	}
-	
-	private void computeVar(){
+
+	private void computeVar() {
 		VarRatio varRatio = new VarRatio();
 		varRatio.setStockCode(stockCode);
 		double var250 = varCompute.computeSingle(baseEarnings250);
 		varRatio.setVarRatio250(var250);
-		if(varRatioSrv.getRecordByKey(stockCode)!= null){
+		if (varRatioSrv.getRecordByKey(stockCode) != null) {
 			varRatioSrv.update(varRatio);
-		}else{
+		} else {
 			varRatioSrv.insert(varRatio);
 		}
 	}
