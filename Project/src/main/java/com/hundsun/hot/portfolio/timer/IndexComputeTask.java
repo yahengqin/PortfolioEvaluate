@@ -21,13 +21,14 @@ public final class IndexComputeTask {
 	
 	//每天晚上10点钟执行基础数据的重新计算
 	@Scheduled(cron = "0 0 22 * * ?")
-	private void baseIndexCompute(){
+	public void baseIndexCompute(){
 		List<String> stockList = baseEarningsService.getStockCodeList();
 		logger.info("Start compute, the stock list length is "+stockList.size());
 		for(String stockCode: stockList){
 			Runnable computeThread = new ComputeStockIndexThread(stockCode);
 			ComputeThreadPool.execute(computeThread);
 		}
+		logger.info("Compute Dended");
 	}
 
 }
