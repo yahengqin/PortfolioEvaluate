@@ -13,7 +13,7 @@
                         http://www.springframework.org/schema/tx/spring-tx.xsd ">
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.hundsun" />
-	
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driver}" />
@@ -30,6 +30,9 @@
 		<property name="minIdle" value="${jdbc.minIdle}"></property>
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${jdbc.maxWait}"></property>
+		<!-- 防止数据库链接关闭 -->
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testOnBorrow" value="true" />
 	</bean>
 
 	<!-- spring和MyBatis整合，不需要mybatis的配置映射文件 -->
@@ -50,8 +53,8 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<!-- 启用事务注解 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
+
 </beans>  
